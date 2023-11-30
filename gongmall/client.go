@@ -50,6 +50,7 @@ type Client struct {
 	common service
 
 	Account  *AccountService
+	Callback *CallbackService
 	Employee *EmployeeService
 	Merchant *MerchantService
 }
@@ -68,6 +69,7 @@ func NewClient(appKey, appSecret, serviceId string) *Client {
 
 	c.common.client = c
 	c.Account = (*AccountService)(&c.common)
+	c.Callback = (*CallbackService)(&c.common)
 	c.Employee = (*EmployeeService)(&c.common)
 	c.Merchant = (*MerchantService)(&c.common)
 
@@ -108,7 +110,6 @@ func (c *Client) httpPostForm(urlPath string, buf []byte) ([]byte, error) {
 	defer resp.Body.Close()
 
 	respBytes, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(respBytes))
 	return respBytes, nil
 }
 
